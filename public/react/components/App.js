@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
 import { AddItemForm } from "./AddItemForm";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 
 // import and prepend the api url to any fetch calls
@@ -87,7 +87,7 @@ export const App = () => {
   }, []);
 
   return (
-    <main>
+    <Stack direction="column">
       <h1>Inventory</h1>
       <h2>Items:</h2>
       <ItemsList items={items} handleItemClick={handleItemClick} />
@@ -113,7 +113,7 @@ export const App = () => {
       </Button>
       <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       <SingleItemPage item={mockItem} cartCount={0} />
-    </main>
+    </Stack>
   );
 };
 

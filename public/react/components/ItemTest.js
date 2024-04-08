@@ -22,21 +22,28 @@ const mockItem = {
 
 const Item = ({ item, cartCount }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card raised variant="outlined">
       <CardContent>
-        <CardMedia>
-          <img src={item.image} alt={item.name} width="200px" height="200px" />
-        </CardMedia>
-        <Typography gutterBottom variant="h5" component="div">
-          {item.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.description}
-        </Typography>
+        <Stack direction="row" sx={{ maxWidth: "600px", maxHeight: "300px" }}>
+          <CardMedia sx={{ margin: "0 20px" }}>
+            <img
+              src={item.image}
+              alt={item.name}
+              width="200px"
+              height="200px"
+            />
+          </CardMedia>
+          <Stack direction="column" justifyContent="space-between">
+            <Typography gutterBottom variant="h5" component="div">
+              {item.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+            <AddToCart item={item} cartCount={cartCount} />
+          </Stack>
+        </Stack>
       </CardContent>
-      <CardActionArea>
-        <AddToCart item={item} cartCount={cartCount} />
-      </CardActionArea>
     </Card>
   );
 };
