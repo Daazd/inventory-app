@@ -9,3 +9,6 @@ dist
 
 #sqlite
 *.sqlite
+
+.package-lock.json
+.package.json
