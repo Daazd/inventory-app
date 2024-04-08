@@ -5,8 +5,11 @@ import {
   Card,
   CardContent,
   CardActionArea,
+  CardMedia,
   Typography,
 } from "@mui/material";
+
+import { AddToCart } from "./AddToCart";
 
 const mockItem = {
   name: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -17,10 +20,13 @@ const mockItem = {
   image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
 };
 
-const Item = ({ item }) => {
+const Item = ({ item, cartCount }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
+        <CardMedia>
+          <img src={item.image} alt={item.name} width="200px" height="200px" />
+        </CardMedia>
         <Typography gutterBottom variant="h5" component="div">
           {item.name}
         </Typography>
@@ -28,11 +34,11 @@ const Item = ({ item }) => {
           {item.description}
         </Typography>
       </CardContent>
-      <CardActionsArea>
-        <Button size="small">Learn More</Button>
-      </CardActionsArea>
+      <CardActionArea>
+        <AddToCart item={item} cartCount={cartCount} />
+      </CardActionArea>
     </Card>
   );
 };
 
-export { Item };
+export { Item, mockItem };
