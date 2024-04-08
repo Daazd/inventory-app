@@ -4,8 +4,10 @@ import { ItemsList } from "./ItemsList";
 import React, { useState, useEffect } from "react";
 import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
+import { UpdateItemForm } from './UpdateItemForm'
 import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
+
 
 
 // import and prepend the api url to any fetch calls
@@ -47,6 +49,23 @@ export const App = () => {
 		}
 	}
 
+	const handleUpdate = async (item) => {
+		try {
+			const response = await fetch(`${apiURL}/items/${item.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(item)
+			});
+			if (response.ok) {
+				alert('Item updated');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	useEffect(() => {
 		fetchItems();
 	}, []);
@@ -82,10 +101,6 @@ export const App = () => {
     //create form to add Item.
   }
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
   return (
     <Stack direction="column">
       <h1>Inventory</h1>
@@ -116,4 +131,3 @@ export const App = () => {
     </Stack>
   );
 };
-
