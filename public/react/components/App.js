@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { ItemsList } from "./ItemsList";
 import React, { useState, useEffect } from "react";
@@ -6,16 +7,22 @@ import { SingleItemPage } from "../pages/SingleItemPage";
 import { AddItemForm } from "./AddItemForm";
 import { Button } from "@mui/material";
 
+
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
 
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
+	const [items, setItems] = useState([]);
+	const [item, setItem] = useState({
+		name: '',
+		description: '',
+		price: '',
+		category: '',
+		image: ''
+	});
 
-  const [items, setItems] = useState([]);
-  const [currentItem, setCurrentItem] = useState({});
-
-  async function fetchItems() {
+	 async function fetchItems() {
     try {
       const response = await fetch(`${apiURL}/items`);
       const itemsData = await response.json();
@@ -26,6 +33,25 @@ export const App = () => {
       console.log("Could not find items list ", err);
     }
   }
+
+	const handleDelete = async () => {
+		try {
+			const response = await fetch(`${apiURL}/items/${item.id}`, {
+				method: 'DELETE'
+			});
+			if (response.ok) {
+				alert('Item deleted');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	useEffect(() => {
+		fetchItems();
+	}, []);
+  
+};
 
   async function handleItemClick(id) {
     //make it work
@@ -90,3 +116,4 @@ export const App = () => {
     </main>
   );
 };
+
