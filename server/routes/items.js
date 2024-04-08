@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-w
 const { Item } = require("../models");
 
 // GET /sauce
