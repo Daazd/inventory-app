@@ -15,6 +15,7 @@ import apiURL from "../api";
 
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
+  const [currentItem, setCurrentItem] = useState({});
 	const [items, setItems] = useState([]);
 	const [item, setItem] = useState({
 		name: '',
@@ -70,7 +71,6 @@ export const App = () => {
 		fetchItems();
 	}, []);
   
-};
 
   async function handleItemClick(id) {
     //make it work
@@ -115,6 +115,8 @@ export const App = () => {
             <p>Description: {currentItem.description}</p>
           )}
           {currentItem.category && <p>Category: {currentItem.description}</p>}
+          <button onClick={handleDelete}> Delete Item</ button>
+          <button onClick={() => handleUpdate(currentItem)}> Update Item</button>
         </div>
       )}
       {!currentItem.name && (
