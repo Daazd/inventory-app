@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SaucesList } from "./SaucesList";
-import { Item, mockItem } from "./Item";
+import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
 
 // import and prepend the api url to any fetch calls
@@ -26,11 +26,10 @@ export const App = () => {
 
   return (
     <main>
-      {/* <h1>Sauce Store</h1>
+      <h1>Sauce Store</h1>
       <h2>All things 🔥</h2>
       <SaucesList sauces={sauces} />
-      <Item item={mockItem} cartCount={0} /> */}
-      <SingleItemPage item={mockItem} cartCount={0} />
+      {/* <SingleItemPage item={mockItem} cartCount={0} /> */}
     </main>
   );
 };
