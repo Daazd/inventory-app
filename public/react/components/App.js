@@ -1,30 +1,28 @@
-
 import React, { useState, useEffect } from "react";
 import { ItemsList } from "./ItemsList";
 import React, { useState, useEffect } from "react";
 import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
-import { UpdateItemForm } from './UpdateItemForm'
+import { UpdateItemForm } from "./UpdateItemForm";
 import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
-
-
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
 
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
-	const [items, setItems] = useState([]);
-	const [item, setItem] = useState({
-		name: '',
-		description: '',
-		price: '',
-		category: '',
-		image: ''
-	});
+  const [currentItem, setCurrentItem] = useState({});
+  const [items, setItems] = useState([]);
+  const [item, setItem] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    image: "",
+  });
 
-	 async function fetchItems() {
+  async function fetchItems() {
     try {
       const response = await fetch(`${apiURL}/items`);
       const itemsData = await response.json();
@@ -36,41 +34,39 @@ export const App = () => {
     }
   }
 
-	const handleDelete = async () => {
-		try {
-			const response = await fetch(`${apiURL}/items/${item.id}`, {
-				method: 'DELETE'
-			});
-			if (response.ok) {
-				alert('Item deleted');
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	}
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${apiURL}/items/${item.id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        alert("Item deleted");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-	const handleUpdate = async (item) => {
-		try {
-			const response = await fetch(`${apiURL}/items/${item.id}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(item)
-			});
-			if (response.ok) {
-				alert('Item updated');
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	}
+  const handleUpdate = async (item) => {
+    try {
+      const response = await fetch(`${apiURL}/items/${item.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+      if (response.ok) {
+        alert("Item updated");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-	useEffect(() => {
-		fetchItems();
-	}, []);
-  
-};
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   async function handleItemClick(id) {
     //make it work
