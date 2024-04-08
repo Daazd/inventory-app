@@ -4,7 +4,7 @@ import { AddItem } from './AddItem';
 import { Link, Router, Routes } from 'react-router-dom';
 import 
 // import and prepend the api url to any fetch calls
-import apiURL from '../api';
+import apiURL from "../api";
 
 export const App = () => {
 
@@ -62,13 +62,19 @@ export const App = () => {
 		fetchSauces();
 	}, []);
 
-	return (
-		<main>	
+  return (
+    <main>
       <h1>Sauce Store</h1>
 			<h2>All things 🔥</h2>
 			<AddItem />
 			<SaucesList sauces={sauces} />
 			<button onClick={handleDelete}>Delete</button>
+      <h2>All things 🔥</h2>
+        <AddItem />
+      {/* <SingleItemPage item={mockItem} cartCount={0} /> */}
+    </main>
+  );
+};
 		</main>
 	)
 }
