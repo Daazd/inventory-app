@@ -11,4 +11,4 @@ dist
 *.sqlite
 
 .package-lock.json
-.package.json
+
