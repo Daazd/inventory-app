@@ -1,5 +1,20 @@
 const express = require("express");
 const router = express.Router();
+w
+const { Item } = require("../models");
+
+// GET /sauce
+router.get("/", async (req, res, next) => {
+  try {
+    const items = await Item.findAll();
+    res.send(items);
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;
+
 const {Item} = require('../models')
 
 router.get('/items', async (req, res) => {
@@ -34,3 +49,4 @@ router.put('/items/:id', async (req, res) => {
     });
     res.json(updatedItem);
 });
+
