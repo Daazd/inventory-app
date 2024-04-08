@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { SaucesList } from "./SaucesList";
 import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
+import { AddItem } from './AddItem
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
@@ -28,8 +28,11 @@ export const App = () => {
     <main>
       <h1>Sauce Store</h1>
       <h2>All things 🔥</h2>
-      <SaucesList sauces={sauces} />
+        <AddItem />
       {/* <SingleItemPage item={mockItem} cartCount={0} /> */}
     </main>
   );
 };
+		</main>
+	)
+}
