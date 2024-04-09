@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ItemsList } from "./ItemsList";
-import React, { useState, useEffect } from "react";
+//import { useHistory } from "react-router-dom";
 import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
 import { UpdateItemForm } from './UpdateItemForm'
@@ -21,6 +21,7 @@ export const App = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000]);
 	const [items, setItems] = useState([]);
+  //const history = useHistory();
 	const [item, setItem] = useState({
 		name: '',
 		description: '',
@@ -39,7 +40,11 @@ export const App = () => {
     } catch (err) {
       console.log("Could not find items list ", err);
     }
-  }
+  };
+  
+ // const handleHomeClick = () => {
+  //  history.push("/");
+  //};
 
 	const handleDelete = async () => {
 		try {
@@ -52,7 +57,7 @@ export const App = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
 
 	const handleUpdate = async (item) => {
 		try {
@@ -69,7 +74,7 @@ export const App = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
 
   const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -93,7 +98,7 @@ export const App = () => {
     } catch (err) {
       console.log("Error getting the item", err);
     }
-  }
+  };
 
   async function handleBackClick() {
     try {
@@ -104,16 +109,17 @@ export const App = () => {
     } catch (err) {
       console.log("Could not find items ", err);
     }
-  }
+  };
 
   async function handleAddItemClick() {
     setItems([]);
     setCurrentItem({});
     //create form to add Item.
-  }
+  };
 
   return (
     <Stack direction="column">
+      
       <h1>Inventory</h1>
       <SearchTerm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
@@ -131,7 +137,7 @@ export const App = () => {
       <label>Price Range:</label>
       <input type="range" min="0" max="1000" value={priceRange[0]} onChange={e => setPriceRange([0, e.target.value, priceRange[1]])} />
       <h2>Items:</h2>
-      <ItemsList items={items} handleItemClick={handleItemClick} />
+      <ItemsList items={filteredItems} handleItemClick={handleItemClick} />
       {currentItem.name && (
         <div>
           <h2>{currentItem.name}</h2>
