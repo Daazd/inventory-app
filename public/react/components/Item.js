@@ -18,7 +18,7 @@ const Item = ({ item, cartCount }) => {
       <CardContent>
         <Stack direction="row" sx={{ maxWidth: "600px", maxHeight: "300px" }}>
           <CardMedia sx={{ margin: "0 20px" }}>
-            <Link to={item.id}>
+            <Link to={`${item.id}`}>
               <img
                 src={item.image}
                 alt={item.name}
@@ -28,9 +28,11 @@ const Item = ({ item, cartCount }) => {
             </Link>
           </CardMedia>
           <Stack direction="column" justifyContent="space-between">
-            <Typography gutterBottom variant="h5" component="div">
-              {item.name}
-            </Typography>
+            <Link to={`${item.id}`}>
+              <Typography gutterBottom variant="h5" component="div">
+                {item.name}
+              </Typography>
+            </Link>
             <Typography variant="body2" color="text.secondary">
               {item.description}
             </Typography>
