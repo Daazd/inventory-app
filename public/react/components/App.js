@@ -111,6 +111,11 @@ export const App = () => {
             <p>Description: {currentItem.description}</p>
           )}
           {currentItem.category && <p>Category: {currentItem.description}</p>}
+          <button onClick={handleDelete}> Delete Item</button>
+          <button onClick={() => handleUpdate(currentItem)}>
+            {" "}
+            Update Item
+          </button>
         </div>
       )}
       {!currentItem.name && (
