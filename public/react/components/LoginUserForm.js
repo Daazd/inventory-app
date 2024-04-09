@@ -185,7 +185,11 @@ const LoginUserForm = ({ open, setOpen }) => {
                 />
               </>
             )}
-            <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+            <Button
+              disabled={isSubmitting}
+              variant="contained"
+              onClick={handleSubmit(onSubmit)}
+            >
               {isForLogin ? "Login" : "Register"}
             </Button>
             <Divider />

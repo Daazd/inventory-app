@@ -18,9 +18,7 @@ export const Header = () => {
           Inventory App
         </Typography>
       </Link>
-      <Box>
-        <ActiveUserArea user={user} />
-      </Box>
+      <ActiveUserArea user={user} />
     </Stack>
   );
 };
