@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Stack, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { ActiveUserArea } from "./ActiveUserArea";
 
 export const Header = () => {
-  const user = {
-    email: "3hQpU@example.com",
-  };
+  const [user, setUser] = useState(null);
 
   return (
     <Stack
@@ -20,9 +19,7 @@ export const Header = () => {
         </Typography>
       </Link>
       <Box>
-        <Typography variant="subtitle2" component="div">
-          Logged in as: {user.email}
-        </Typography>
+        <ActiveUserArea user={user} />
       </Box>
     </Stack>
   );

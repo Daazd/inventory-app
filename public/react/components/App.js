@@ -10,11 +10,10 @@ import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
 import { SearchTerm } from "./SearchTerm";
 import { Header } from "./Header";
-import CreateUser from "./CreateUser";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
-import CreateUser from "./CreateUser";
+import CreateUser from "./LoginUserForm";
 
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -33,7 +32,6 @@ export const App = () => {
   });
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-
 
   async function fetchItems() {
     try {
@@ -123,10 +121,9 @@ export const App = () => {
 
   return (
     <Router>
-      <Stack direction="column" style={{ width : '80%', margin: '0 auto'}}>
-      <Header />
-      <CreateUser />
-      {routes}
+      <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
+        <Header />
+        {routes}
       </Stack>
     </Router>
   );
