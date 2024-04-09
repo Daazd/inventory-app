@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ItemsList } from "./ItemsList";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useTheme } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { Item } from "./Item";
 import { SingleItemPage, HomePage, InventoryPage, CartPage } from "../pages";
 import { UpdateItemForm } from "./UpdateItemForm";
@@ -27,6 +29,9 @@ export const App = () => {
     category: "",
     image: "",
   });
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
+
 
   async function fetchItems() {
     try {
@@ -116,8 +121,10 @@ export const App = () => {
 
   return (
     <Router>
+      <Stack direction="column" style={{ width : '80%', margin: '0 auto'}}>
       <Header />
       {routes}
+      </Stack>
     </Router>
   );
 
