@@ -10,11 +10,10 @@ import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
 import { SearchTerm } from "./SearchTerm";
 import { Header } from "./Header";
-import CreateUser from "./CreateUser";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
-import CreateUser from "./CreateUser";
+import CreateUser from "./LoginUserForm";
 
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -33,7 +32,6 @@ export const App = () => {
   });
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-
 
   async function fetchItems() {
     try {
@@ -123,60 +121,10 @@ export const App = () => {
 
   return (
     <Router>
-      <Stack direction="column" style={{ width : '80%', margin: '0 auto'}}>
-      <Header />
-      <CreateUser />
-      {routes}
+      <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
+        <Header />
+        {routes}
       </Stack>
     </Router>
-  );
-
-  return (
-    <Stack direction="column">
-      <h1>Inventory</h1>
-      <SearchTerm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <select
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="">All Categories</option>
-        <option value="electronics">Electronics</option>
-        <option value="clothing">Clothing</option>
-        <option value="accesories">Accesories</option>
-      </select>
-      <label>Price Range:</label>
-      <input
-        type="range"
-        min="0"
-        max="1000"
-        value={priceRange[0]}
-        onChange={(e) => setPriceRange([0, e.target.value, priceRange[1]])}
-      />
-      <h2>Items:</h2>
-      <ItemsList items={filteredItems} handleItemClick={handleItemClick} />
-      {currentItem.name && (
-        <div>
-          <h2>{currentItem.name}</h2>
-          {currentItem.image && <p>Image: {currentItem.image}</p>}
-          {currentItem.price && <p>Price: {currentItem.price}</p>}
-          {currentItem.description && (
-            <p>Description: {currentItem.description}</p>
-          )}
-          {currentItem.category && <p>Category: {currentItem.description}</p>}
-          <button onClick={handleDelete}> Delete Item</button>
-          <button onClick={() => handleUpdate(currentItem)}>
-            {" "}
-            Update Item
-          </button>
-        </div>
-      )}
-      {!currentItem.name && (
-        <button onClick={() => handleAddItemClick()}>Add Item</button>
-      )}
-      <Button variant="contained" onClick={() => setOpenAddItem(true)}>
-        Add Item
-      </Button>
-      <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
-    </Stack>
   );
 };
