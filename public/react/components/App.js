@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from "react";
 import { ItemsList } from "./ItemsList";
-import React, { useState, useEffect } from "react";
+//import { useHistory } from "react-router-dom";
 import { Item, mockItem } from "./ItemTest";
 import { SingleItemPage } from "../pages/SingleItemPage";
 import { UpdateItemForm } from './UpdateItemForm'
 import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
-
+import { SearchTerm } from "./SearchTerm";
 
 
 // import and prepend the api url to any fetch calls
@@ -16,7 +16,12 @@ import apiURL from "../api";
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [priceRange, setPriceRange] = useState([0, 1000]);
 	const [items, setItems] = useState([]);
+  //const history = useHistory();
 	const [item, setItem] = useState({
 		name: '',
 		description: '',
@@ -35,7 +40,11 @@ export const App = () => {
     } catch (err) {
       console.log("Could not find items list ", err);
     }
-  }
+  };
+  
+ // const handleHomeClick = () => {
+  //  history.push("/");
+  //};
 
 	const handleDelete = async () => {
 		try {
@@ -48,7 +57,7 @@ export const App = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
 
 	const handleUpdate = async (item) => {
 		try {
@@ -65,7 +74,14 @@ export const App = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
+
+  const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (!selectedCategory || item.category === selectedCategory) &&
+    (!selectedColor || item.color === selectedColor) &&
+    item.price >= priceRange[0] && item.price <= priceRange[1]
+  );
 
 	useEffect(() => {
 		fetchItems();
@@ -82,7 +98,7 @@ export const App = () => {
     } catch (err) {
       console.log("Error getting the item", err);
     }
-  }
+  };
 
   async function handleBackClick() {
     try {
@@ -93,19 +109,35 @@ export const App = () => {
     } catch (err) {
       console.log("Could not find items ", err);
     }
-  }
+  };
 
   async function handleAddItemClick() {
     setItems([]);
     setCurrentItem({});
     //create form to add Item.
-  }
+  };
 
   return (
     <Stack direction="column">
+      
       <h1>Inventory</h1>
+      <SearchTerm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
+        <option value="">All Categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="clothing">Clothing</option>
+        <option value="accesories">Accesories</option>
+        </select>
+      <select value={selectedColor} onChange={e => setSelectedColor(e.target.value)}>
+        <option value="">All Colors</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+      </select>
+      <label>Price Range:</label>
+      <input type="range" min="0" max="1000" value={priceRange[0]} onChange={e => setPriceRange([0, e.target.value, priceRange[1]])} />
       <h2>Items:</h2>
-      <ItemsList items={items} handleItemClick={handleItemClick} />
+      <ItemsList items={filteredItems} handleItemClick={handleItemClick} />
       {currentItem.name && (
         <div>
           <h2>{currentItem.name}</h2>
@@ -133,3 +165,4 @@ export const App = () => {
     </Stack>
   );
 };
+
