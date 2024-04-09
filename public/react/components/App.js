@@ -10,9 +10,11 @@ import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
 import { SearchTerm } from "./SearchTerm";
 import { Header } from "./Header";
+import CreateUser from "./CreateUser";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
+import CreateUser from "./CreateUser";
 
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -123,6 +125,7 @@ export const App = () => {
     <Router>
       <Stack direction="column" style={{ width : '80%', margin: '0 auto'}}>
       <Header />
+      <CreateUser />
       {routes}
       </Stack>
     </Router>
