@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ItemsList } from "./ItemsList";
-//import { useHistory } from "react-router-dom";
-import { Item, mockItem } from "./ItemTest";
-import { SingleItemPage } from "../pages/SingleItemPage";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Item } from "./Item";
+import { SingleItemPage, HomePage, InventoryPage, CartPage } from "../pages";
 import { UpdateItemForm } from "./UpdateItemForm";
 import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
 import { SearchTerm } from "./SearchTerm";
+import { Header } from "./Header";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
@@ -14,10 +15,8 @@ import apiURL from "../api";
 export const App = () => {
   const [openAddItem, setOpenAddItem] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [items, setItems] = useState([]);
   //const history = useHistory();
@@ -79,7 +78,6 @@ export const App = () => {
     (item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (!selectedCategory || item.category === selectedCategory) &&
-      (!selectedColor || item.color === selectedColor) &&
       item.price >= priceRange[0] &&
       item.price <= priceRange[1]
   );
@@ -100,22 +98,28 @@ export const App = () => {
     }
   }
 
-  async function handleBackClick() {
-    try {
-      const response = await fetch(`${apiURL}/items`);
-      const itemsData = await response.json();
-      setItems(itemsData);
-      setCurrentItem({});
-    } catch (err) {
-      console.log("Could not find items ", err);
-    }
-  }
-
   async function handleAddItemClick() {
     setItems([]);
     setCurrentItem({});
     //create form to add Item.
   }
+
+  // create router and routes: /, /items, /items/:id, /cart
+  const routes = (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/items" element={<InventoryPage />} />
+      <Route path="/items/:id" element={<SingleItemPage />} />
+      <Route path="/cart" element={<CartPage />} />
+    </Routes>
+  );
+
+  return (
+    <Router>
+      <Header />
+      {routes}
+    </Router>
+  );
 
   return (
     <Stack direction="column">
@@ -129,15 +133,6 @@ export const App = () => {
         <option value="electronics">Electronics</option>
         <option value="clothing">Clothing</option>
         <option value="accesories">Accesories</option>
-      </select>
-      <select
-        value={selectedColor}
-        onChange={(e) => setSelectedColor(e.target.value)}
-      >
-        <option value="">All Colors</option>
-        <option value="red">Red</option>
-        <option value="blue">Blue</option>
-        <option value="green">Green</option>
       </select>
       <label>Price Range:</label>
       <input
@@ -159,20 +154,19 @@ export const App = () => {
           )}
           {currentItem.category && <p>Category: {currentItem.description}</p>}
           <button onClick={handleDelete}> Delete Item</button>
-          <button onClick={() => handleUpdate(currentItem)}>Update Item</button>
+          <button onClick={() => handleUpdate(currentItem)}>
+            {" "}
+            Update Item
+          </button>
         </div>
       )}
       {!currentItem.name && (
         <button onClick={() => handleAddItemClick()}>Add Item</button>
       )}
-      {items.length === 0 && (
-        <button onClick={() => handleBackClick()}> Back to Inventory</button>
-      )}
       <Button variant="contained" onClick={() => setOpenAddItem(true)}>
         Add Item
       </Button>
       <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
-      <SingleItemPage item={mockItem} cartCount={0} />
     </Stack>
   );
 };

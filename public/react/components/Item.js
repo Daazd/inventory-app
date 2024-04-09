@@ -1,14 +1,45 @@
 import React from "react";
+import {
+  Stack,
+  Button,
+  Card,
+  CardContent,
+  CardActionArea,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
-export const Item = ({ item, handleItemClick }) => {
-  const onClick = () => {
-    handleItemClick(item.id);
-  };
+import { AddToCart } from "./AddToCart";
 
+const Item = ({ item, cartCount }) => {
   return (
-    <>
-      <h3 onClick={onClick}>{item.name}</h3>
-      <img onClick={onClick} src={item.image} alt={item.name} />
-    </>
+    <Card raised variant="outlined">
+      <CardContent>
+        <Stack direction="row" sx={{ maxWidth: "600px", maxHeight: "300px" }}>
+          <CardMedia sx={{ margin: "0 20px" }}>
+            <Link to={item.id}>
+              <img
+                src={item.image}
+                alt={item.name}
+                width="200px"
+                height="200px"
+              />
+            </Link>
+          </CardMedia>
+          <Stack direction="column" justifyContent="space-between">
+            <Typography gutterBottom variant="h5" component="div">
+              {item.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+            <AddToCart item={item} cartCount={cartCount} />
+          </Stack>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 };
+
+export { Item };
