@@ -9,6 +9,7 @@ import { SearchTerm } from "./SearchTerm";
 import { Item } from "./Item";
 import { Admin } from "./Admin";
 import { PrivateRouteWrapper } from "./PrivateRoute";
+import AdminPanelForm from "./AdminPanelForm";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
@@ -62,14 +63,6 @@ export const App = () => {
     }
   };
 
-  const filteredItems = items.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!selectedCategory || item.category === selectedCategory) &&
-      item.price >= priceRange[0] &&
-      item.price <= priceRange[1]
-  );
-
   async function handleItemClick(id) {
     //make it work
     try {
@@ -95,6 +88,11 @@ export const App = () => {
       <Route path="/items" element={<InventoryPage />} />
       <Route path="/items/:id" element={<SingleItemPage />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/admin" element={
+        <PrivateRouteWrapper roles={['admin']}>
+          <AdminPanelForm />
+        </PrivateRouteWrapper>
+      } />
       <Route path="/admin/*" element={
         <PrivateRouteWrapper roles={['admin']}>
           <Admin />
