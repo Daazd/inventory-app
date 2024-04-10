@@ -3,9 +3,7 @@ import { Typography, Stack, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ActiveUserArea } from "./ActiveUserArea";
 
-export const Header = () => {
-  const [user, setUser] = useState(null);
-
+export const Header = ({ user, setUser }) => {
   return (
     <Stack
       direction="row"
@@ -18,7 +16,7 @@ export const Header = () => {
           Inventory App
         </Typography>
       </Link>
-      <ActiveUserArea user={user} />
+      <ActiveUserArea user={user} setUser={setUser} />
     </Stack>
   );
 };

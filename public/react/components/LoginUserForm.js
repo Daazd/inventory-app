@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-const LoginUserForm = ({ open, setOpen }) => {
+const LoginUserForm = ({ open, setOpen, setUser }) => {
   const [isForLogin, setIsForLogin] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -36,6 +36,7 @@ const LoginUserForm = ({ open, setOpen }) => {
       });
       if (response.ok) {
         setOpen(false);
+        setUser(response.data);
       } else {
         console.log({ response });
         setError("submission", "Error Creating User");
@@ -57,6 +58,7 @@ const LoginUserForm = ({ open, setOpen }) => {
       });
       if (response.ok) {
         setOpen(false);
+        setUser(response.data);
       } else {
         console.log({ response });
         setError("root.submission", {
