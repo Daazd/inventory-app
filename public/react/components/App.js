@@ -16,6 +16,7 @@ import apiURL from "../api";
 import CreateUser from "./LoginUserForm";
 
 export const App = () => {
+  const [user, setUser] = useState(null);
   const [openAddItem, setOpenAddItem] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -113,8 +114,8 @@ export const App = () => {
   const routes = (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/items" element={<InventoryPage />} />
-      <Route path="/items/:id" element={<SingleItemPage />} />
+      <Route path="/items" element={<InventoryPage user={user}/>} />
+      <Route path="/items/:id" element={<SingleItemPage user={user}/>} />
       <Route path="/cart" element={<CartPage />} />
     </Routes>
   );
@@ -122,7 +123,7 @@ export const App = () => {
   return (
     <Router>
       <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
-        <Header />
+        <Header user={user} setUser={setUser}/>
         {routes}
       </Stack>
     </Router>

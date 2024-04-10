@@ -50,7 +50,7 @@ const ActiveUserArea = ({ user, setUser }) => {
           <MenuItem onClick={handleOpenLoginForm}>Login</MenuItem>
         )}
       </Menu>
-      <LoginUserForm isForLogin={false} open={showForm} setOpen={setShowForm} />
+      <LoginUserForm open={showForm} setOpen={setShowForm} setUser={setUser} />
     </>
   );
 };
