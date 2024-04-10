@@ -15,6 +15,11 @@ const ActiveUserArea = ({ user, setUser }) => {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    handleClose();
+  };
+
   const handleOpenLoginForm = () => {
     setShowForm(true);
     handleClose();
@@ -43,7 +48,7 @@ const ActiveUserArea = ({ user, setUser }) => {
           <MenuItem onClick={handleClose}>
             <Typography variant="subtitle2">{user.name}</Typography>
           </MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       ) : (
         <Menu
