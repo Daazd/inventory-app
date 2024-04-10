@@ -10,6 +10,7 @@ import apiURL from "../api";
 const InventoryPage = () => {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
+  const [openAddItem, setOpenAddItem] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -36,9 +37,10 @@ const InventoryPage = () => {
       position: "fixed",
       bottom: (theme) => theme.spacing(2),
       right: (theme) => theme.spacing(2)
-    }} color="primary" aria-label="add" onClick={() => console.log("add item button clicked")}>
+    }} color="primary" aria-label="add" onClick={() => setOpenAddItem(!openAddItem)}>
           <AddIcon />
           </Fab>   
+        <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       </Stack>
     </Box>
     

@@ -8,11 +8,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AddToCart } from "../components/AddToCart";
 import { useParams } from "react-router-dom";
+import { UpdatedItemForm } from "../components/UpdateItemForm";
+import { DeleteItemForm } from "../components/DeleteItemForm";
 import apiURL from "../api";
 
 const SingleItemPage = ({}) => {
   const { id } = useParams();
   const [item, setItem] = useState({});
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [speedDialOpen, setSpeedDialOpen] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -44,6 +49,12 @@ const SingleItemPage = ({}) => {
     { icon: <EditIcon />, name: 'Copy' },
     { icon: <EditIcon />, name: 'Save' }
   ]
+  function handleOpenUpdate() {
+    setOpenUpdate(!openUpdate);
+  }
+  function handleOpenDelete() {
+    setOpenDelete(!openDelete);
+  }
 
   return (
     <Stack direction="row" justifyContent="space-between" width="1000px">
@@ -57,22 +68,36 @@ const SingleItemPage = ({}) => {
         </Typography>
         <Typography variant="h6">Price: ${item.price}</Typography>
         <AddToCart item={item} cartCount={0} />
+        <UpdatedItemForm
+          open={openUpdate}
+          onUpdate={() => console.log("Update Item")}
+          setOpen={setOpenUpdate}
+          item={item}
+        />
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
           icon={<SpeedDialIcon />}
           direction={"up"}
+          onClose={() => setSpeedDialOpen(false)}
+          onOpen={() => setSpeedDialOpen(true)}
+          open={speedDialOpen}
         >
           <SpeedDialAction
             icon={<EditIcon />}
             tooltipTitle="Edit"
+            onClick={handleOpenUpdate}
           />
           <SpeedDialAction
             icon={<DeleteIcon />}
             tooltipTitle="Delete"
+            onClick={handleOpenDelete}
           />
         </StyledSpeedDial>
+        
       </Stack>
+     
     </Stack>
+    
   );
 };
 
