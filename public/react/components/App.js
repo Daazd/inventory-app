@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { ItemsList } from "./ItemsList";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Item } from "./Item";
 import { SingleItemPage, HomePage, InventoryPage, CartPage } from "../pages";
-import { UpdateItemForm } from "./UpdateItemForm";
-import { AddItemForm } from "./AddItemForm";
 import { Button, Stack } from "@mui/material";
-import { SearchTerm } from "./SearchTerm";
 import { Header } from "./Header";
+import { SearchTerm } from "./SearchTerm";
+import { Item } from "./Item";
+import { Admin } from "./Admin";
+import { PrivateRouteWrapper } from "./PrivateRoute";
+import AdminPanelForm from "./AdminPanelForm";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
@@ -33,22 +33,6 @@ export const App = () => {
   });
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-
-  async function fetchItems() {
-    try {
-      const response = await fetch(`${apiURL}/items`);
-      const itemsData = await response.json();
-      console.log({ itemsData });
-      setItems(itemsData);
-      setCurrentItem({});
-    } catch (err) {
-      console.log("Could not find items list ", err);
-    }
-  }
-
-  // const handleHomeClick = () => {
-  //  history.push("/");
-  //};
 
   const handleDelete = async () => {
     try {
@@ -80,18 +64,6 @@ export const App = () => {
     }
   };
 
-  const filteredItems = items.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!selectedCategory || item.category === selectedCategory) &&
-      item.price >= priceRange[0] &&
-      item.price <= priceRange[1]
-  );
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
   async function handleItemClick(id) {
     //make it work
     try {
@@ -117,14 +89,36 @@ export const App = () => {
       <Route path="/items" element={<InventoryPage user={user}/>} />
       <Route path="/items/:id" element={<SingleItemPage user={user}/>} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/admin" element={
+        <PrivateRouteWrapper roles={['admin']}>
+          <AdminPanelForm />
+        </PrivateRouteWrapper>
+      } />
+      <Route path="/admin/*" element={
+        <PrivateRouteWrapper roles={['admin']}>
+          <Admin />
+        </PrivateRouteWrapper>
+      } />
     </Routes>
   );
 
   return (
     <Router>
       <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
+        <SearchTerm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Header user={user} setUser={setUser}/>
         {routes}
+        <Stack direction="row" justifyContent="flex-end">
+          <Link to="/">
+            <Button variant="contained">Home</Button>
+          </Link>
+          <Link to="/items">
+            <Button variant="contained">Back to Shopping</Button>
+          </Link>
+          <Link to="/cart">
+            <Button variant="contained">Your Cart</Button>
+          </Link>
+      </Stack>
       </Stack>
     </Router>
   );
