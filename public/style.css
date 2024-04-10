@@ -14,3 +14,7 @@ a:hover,
 a:active {
   color: inherit;
 }
+
+.player:focus {
+  outline: none;
+}

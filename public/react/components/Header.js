@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Typography, Stack, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ActiveUserArea } from "./ActiveUserArea";
-// import home icon from material ui
 import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
