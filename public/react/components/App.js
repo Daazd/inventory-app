@@ -12,7 +12,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { SingleItemPage, HomePage, InventoryPage, CartPage } from "../pages";
 import { Button, Stack } from "@mui/material";
 import { Header } from "./Header";
-import { SearchTerm } from "./SearchTerm";
 import { Item } from "./Item";
 import { Admin } from "./Admin";
 import { PrivateRouteWrapper } from "./PrivateRoute";
@@ -118,7 +117,6 @@ export const App = () => {
   return (
     <Router>
       <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
-        <SearchTerm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Header user={user} setUser={setUser} />
         {routes}
         <Stack direction="row" justifyContent="flex-end">
