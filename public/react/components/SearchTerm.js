@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
 
-export const SearchTerm = ({ searchTerm, setSearchTerm }) => {
-  const [items, setItems] = useState([]);
+export const SearchTerm = ({ items, updateItems }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [priceRange, setPriceRange] = useState([0, 1000]);
 
-  const filteredItems = items.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!selectedCategory || item.category === selectedCategory) &&
-      item.price >= priceRange[0] &&
-      item.price <= priceRange[1]
-  );
+  useEffect(() => {
+    const lowercase = searchTerm.toLowerCase();
+    const filteredItems = items.filter(
+      (item) => {
+        const nameAndDesc = item.name + " " + item.description;
+        return nameAndDesc.toLowerCase().includes(" " + lowercase);
+      }
+      // (!selectedCategory || item.category === selectedCategory) &&
+      // item.price >= priceRange[0] &&
+      // item.price <= priceRange[1]
+    );
+    updateItems(filteredItems);
+  }, [searchTerm, selectedCategory, priceRange]);
 
   return (
     <TextField

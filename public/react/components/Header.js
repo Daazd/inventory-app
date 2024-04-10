@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ActiveUserArea } from "./ActiveUserArea";
 
 export const Header = ({ user, setUser }) => {
+  console.log({ user });
   return (
     <Stack
       direction="row"

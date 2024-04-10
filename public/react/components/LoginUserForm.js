@@ -16,7 +16,7 @@ import {
 import { useForm } from "react-hook-form";
 import AdminPanelForm from "./AdminPanelForm";
 
-
+const LoginUserForm = ({ open, setOpen, setUser }) => {
   const [formType, setFormType] = useState("guest");
   const [isForLogin, setIsForLogin] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,9 +29,9 @@ import AdminPanelForm from "./AdminPanelForm";
     formState: { errors },
   } = useForm();
 
-  if (formType === 'admin') {
+  if (formType === "admin") {
     return <AdminPanelForm />;
-  };
+  }
 
   const createUser = async (data) => {
     try {
@@ -42,16 +42,16 @@ import AdminPanelForm from "./AdminPanelForm";
         },
         body: JSON.stringify(data),
       });
+      const json = await response.json();
       if (response.ok) {
-        setOpen(false);
-        setUser(response.data);
+        handleClose();
+        setUser(json);
       } else {
-        console.log({ response });
         setError("root.submission", "Error Creating User");
       }
     } catch (error) {
-      setError("root.submission", error.message);
-      console.error(error);
+      setError("root.submission", { message: error.message });
+      console.error({ error });
     }
   };
 
@@ -64,23 +64,22 @@ import AdminPanelForm from "./AdminPanelForm";
         },
         body: JSON.stringify(data),
       });
+      const json = await response.json();
       if (response.ok) {
-        setOpen(false);
-        setUser(response.data);
+        handleClose();
+        setUser(json);
       } else {
-        console.log({ response });
         setError("root.submission", {
           message: response.status + ": " + response.statusText,
         });
       }
     } catch (error) {
-      setError("root.submission", error);
+      setError("root.submission", { message: error.message });
       console.error({ error });
     }
   };
 
   const onSubmit = async (data) => {
-    console.log({ data });
     setIsSubmitting(true);
     if (isForLogin) {
       loginUser(data);
@@ -209,16 +208,16 @@ import AdminPanelForm from "./AdminPanelForm";
                 : "Already have an account?"}
             </Typography>
             <Button onClick={() => setIsForLogin(!isForLogin)}>
-              {isForLogin ? "Register" : "Login"} 
+              {isForLogin ? "Register" : "Login"}
             </Button>
             <Divider />
             <Typography variant="body2" textAlign="center">
-              Or login as 
+              Or login as
             </Typography>
             <Box display="flex" justifyContent="center">
               <ButtonGroup color="primary">
-                <Button onClick={() => setFormType('guest')}>Guest</Button>
-                <Button onClick={() => setFormType('admin')}>Admin</Button>
+                <Button onClick={() => setFormType("guest")}>Guest</Button>
+                <Button onClick={() => setFormType("admin")}>Admin</Button>
               </ButtonGroup>
             </Box>
           </Stack>

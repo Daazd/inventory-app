@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 import { useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { SingleItemPage, HomePage, InventoryPage, CartPage } from "../pages";
 import { Button, Stack } from "@mui/material";
 import { Header } from "./Header";
-import { SearchTerm } from "./SearchTerm";
 import { Item } from "./Item";
 import { Admin } from "./Admin";
 import { PrivateRouteWrapper } from "./PrivateRoute";
@@ -86,27 +92,32 @@ export const App = () => {
   const routes = (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/items" element={<InventoryPage user={user}/>} />
-      <Route path="/items/:id" element={<SingleItemPage user={user}/>} />
+      <Route path="/items" element={<InventoryPage user={user} />} />
+      <Route path="/items/:id" element={<SingleItemPage user={user} />} />
       <Route path="/cart" element={<CartPage />} />
-      <Route path="/admin" element={
-        <PrivateRouteWrapper roles={['admin']}>
-          <AdminPanelForm />
-        </PrivateRouteWrapper>
-      } />
-      <Route path="/admin/*" element={
-        <PrivateRouteWrapper roles={['admin']}>
-          <Admin />
-        </PrivateRouteWrapper>
-      } />
+      <Route
+        path="/admin"
+        element={
+          <PrivateRouteWrapper roles={["admin"]}>
+            <AdminPanelForm />
+          </PrivateRouteWrapper>
+        }
+      />
+      <Route
+        path="/admin/*"
+        element={
+          <PrivateRouteWrapper roles={["admin"]}>
+            <Admin />
+          </PrivateRouteWrapper>
+        }
+      />
     </Routes>
   );
 
   return (
     <Router>
       <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
-        <SearchTerm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <Header user={user} setUser={setUser}/>
+        <Header user={user} setUser={setUser} />
         {routes}
         <Stack direction="row" justifyContent="flex-end">
           <Link to="/">
@@ -118,7 +129,7 @@ export const App = () => {
           <Link to="/cart">
             <Button variant="contained">Your Cart</Button>
           </Link>
-      </Stack>
+        </Stack>
       </Stack>
     </Router>
   );
