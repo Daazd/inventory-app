@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Stack } from "@mui/material";
+import { Box, Typography, Stack, Fab } from "@mui/material";
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import { styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { AddToCart } from "../components/AddToCart";
 import { useParams } from "react-router-dom";
 import apiURL from "../api";
@@ -22,6 +28,23 @@ const SingleItemPage = ({}) => {
     fetchItem();
   }, []);
 
+  const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
+    position: 'absolute',
+    '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+    '&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight': {
+      top: theme.spacing(2),
+      left: theme.spacing(2),
+    },
+  }));
+
+  const actions = [
+    { icon: <EditIcon />, name: 'Copy' },
+    { icon: <EditIcon />, name: 'Save' }
+  ]
+
   return (
     <Stack direction="row" justifyContent="space-between" width="1000px">
       <img width="400px" height="400px" src={item.image} alt={item.name} />
@@ -34,6 +57,20 @@ const SingleItemPage = ({}) => {
         </Typography>
         <Typography variant="h6">Price: ${item.price}</Typography>
         <AddToCart item={item} cartCount={0} />
+        <StyledSpeedDial
+          ariaLabel="SpeedDial playground example"
+          icon={<SpeedDialIcon />}
+          direction={"up"}
+        >
+          <SpeedDialAction
+            icon={<EditIcon />}
+            tooltipTitle="Edit"
+          />
+          <SpeedDialAction
+            icon={<DeleteIcon />}
+            tooltipTitle="Delete"
+          />
+        </StyledSpeedDial>
       </Stack>
     </Stack>
   );

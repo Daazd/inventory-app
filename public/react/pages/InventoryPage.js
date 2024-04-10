@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, Stack } from "@mui/material";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import { ItemsList } from "../components/ItemsList";
 import { SearchTerm } from "../components/SearchTerm";
+import { AddItemForm } from "../components/AddItemForm";
 import apiURL from "../api";
 
 const InventoryPage = () => {
@@ -28,9 +31,17 @@ const InventoryPage = () => {
       <Stack spacing={4}>
         <Grid container spacing={4}>
           <ItemsList items={filteredItems} />
-        </Grid>
+        </Grid>   
+        <Fab sx={{
+      position: "fixed",
+      bottom: (theme) => theme.spacing(2),
+      right: (theme) => theme.spacing(2)
+    }} color="primary" aria-label="add" onClick={() => console.log("add item button clicked")}>
+          <AddIcon />
+          </Fab>   
       </Stack>
     </Box>
+    
   );
 };
 
