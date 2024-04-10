@@ -10,14 +10,10 @@ import {
   Divider,
   Typography,
   LinearProgress,
-  ButtonGroup,
-  Box,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import AdminPanelForm from "./AdminPanelForm";
 
 const LoginUserForm = ({ open, setOpen, setUser }) => {
-  const [formType, setFormType] = useState("guest");
   const [isForLogin, setIsForLogin] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -28,10 +24,6 @@ const LoginUserForm = ({ open, setOpen, setUser }) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  if (formType === "admin") {
-    return <AdminPanelForm />;
-  }
 
   const createUser = async (data) => {
     try {
@@ -210,16 +202,6 @@ const LoginUserForm = ({ open, setOpen, setUser }) => {
             <Button onClick={() => setIsForLogin(!isForLogin)}>
               {isForLogin ? "Register" : "Login"}
             </Button>
-            <Divider />
-            <Typography variant="body2" textAlign="center">
-              Or login as
-            </Typography>
-            <Box display="flex" justifyContent="center">
-              <ButtonGroup color="primary">
-                <Button onClick={() => setFormType("guest")}>Guest</Button>
-                <Button onClick={() => setFormType("admin")}>Admin</Button>
-              </ButtonGroup>
-            </Box>
           </Stack>
         </form>
       </DialogContent>
