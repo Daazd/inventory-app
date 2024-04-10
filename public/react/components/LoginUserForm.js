@@ -34,16 +34,16 @@ const LoginUserForm = ({ open, setOpen, setUser }) => {
         },
         body: JSON.stringify(data),
       });
+      const json = await response.json();
       if (response.ok) {
-        setOpen(false);
-        setUser(response.data);
+        handleClose();
+        setUser(json);
       } else {
-        console.log({ response });
         setError("root.submission", "Error Creating User");
       }
     } catch (error) {
-      setError("root.submission", error.message);
-      console.error(error);
+      setError("root.submission", { message: error.message });
+      console.error({ error });
     }
   };
 
@@ -56,23 +56,22 @@ const LoginUserForm = ({ open, setOpen, setUser }) => {
         },
         body: JSON.stringify(data),
       });
+      const json = await response.json();
       if (response.ok) {
-        setOpen(false);
-        setUser(response.data);
+        handleClose();
+        setUser(json);
       } else {
-        console.log({ response });
         setError("root.submission", {
           message: response.status + ": " + response.statusText,
         });
       }
     } catch (error) {
-      setError("root.submission", error);
+      setError("root.submission", { message: error.message });
       console.error({ error });
     }
   };
 
   const onSubmit = async (data) => {
-    console.log({ data });
     setIsSubmitting(true);
     if (isForLogin) {
       loginUser(data);

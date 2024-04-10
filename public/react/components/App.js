@@ -46,6 +46,8 @@ export const App = () => {
     }
   }
 
+  console.log({ user });
+
   // const handleHomeClick = () => {
   //  history.push("/");
   //};
@@ -114,8 +116,8 @@ export const App = () => {
   const routes = (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/items" element={<InventoryPage user={user}/>} />
-      <Route path="/items/:id" element={<SingleItemPage user={user}/>} />
+      <Route path="/items" element={<InventoryPage user={user} />} />
+      <Route path="/items/:id" element={<SingleItemPage user={user} />} />
       <Route path="/cart" element={<CartPage />} />
     </Routes>
   );
@@ -123,7 +125,7 @@ export const App = () => {
   return (
     <Router>
       <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
-        <Header user={user} setUser={setUser}/>
+        <Header user={user} setUser={setUser} />
         {routes}
       </Stack>
     </Router>

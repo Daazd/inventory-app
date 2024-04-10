@@ -24,7 +24,7 @@ const ActiveUserArea = ({ user, setUser }) => {
     <>
       {user ? (
         <IconButton onClick={handleClick}>
-          <Avatar sx={{ bgcolor: "#fff" }}>
+          <Avatar sx={{ bgcolor: "#1976d2" }}>
             {user.name.charAt(0).toUpperCase()}
           </Avatar>
         </IconButton>
@@ -33,23 +33,28 @@ const ActiveUserArea = ({ user, setUser }) => {
           <Avatar />
         </IconButton>
       )}
-      <Menu
-        id="account-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {user ? (
-          <>
-            <MenuItem onClick={handleClose}>
-              <Typography variant="subtitle2">{user.name}</Typography>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </>
-        ) : (
+      {user ? (
+        <Menu
+          id="account-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <Typography variant="subtitle2">{user.name}</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
+      ) : (
+        <Menu
+          id="account-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
           <MenuItem onClick={handleOpenLoginForm}>Login</MenuItem>
-        )}
-      </Menu>
+        </Menu>
+      )}
       <LoginUserForm open={showForm} setOpen={setShowForm} setUser={setUser} />
     </>
   );
