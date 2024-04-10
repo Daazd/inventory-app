@@ -14,7 +14,7 @@ import { AddToCart } from "./AddToCart";
 
 const Item = ({ item, cartCount }) => {
   return (
-    <Card raised variant="outlined">
+    <Card raised>
       <CardContent>
         <Stack direction="row" sx={{ maxWidth: "600px", maxHeight: "300px" }}>
           <CardMedia sx={{ margin: "0 20px" }}>

@@ -16,7 +16,7 @@ import {
 import { useForm } from "react-hook-form";
 import AdminPanelForm from "./AdminPanelForm";
 
-const LoginUserForm = ({ open, setOpen }) => {
+
   const [formType, setFormType] = useState("guest");
   const [isForLogin, setIsForLogin] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +44,7 @@ const LoginUserForm = ({ open, setOpen }) => {
       });
       if (response.ok) {
         setOpen(false);
+        setUser(response.data);
       } else {
         console.log({ response });
         setError("root.submission", "Error Creating User");
@@ -65,6 +66,7 @@ const LoginUserForm = ({ open, setOpen }) => {
       });
       if (response.ok) {
         setOpen(false);
+        setUser(response.data);
       } else {
         console.log({ response });
         setError("root.submission", {
@@ -193,7 +195,11 @@ const LoginUserForm = ({ open, setOpen }) => {
                 />
               </>
             )}
-            <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+            <Button
+              disabled={isSubmitting}
+              variant="contained"
+              onClick={handleSubmit(onSubmit)}
+            >
               {isForLogin ? "Login" : "Register"}
             </Button>
             <Divider />
