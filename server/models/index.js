@@ -1,15 +1,13 @@
-const { Sequelize } = require("sequelize");
-const { sequelize } = require("../db");
+const { Cart } = require("./Cart");
+const { CartItem } = require("./CartItem");
+const { Item } = require("./Item");
+const { User } = require("./User");
+const { db } = require("../db");
 
-const Item = sequelize.define("Item", {
-  name: Sequelize.STRING,
-  description: Sequelize.STRING,
-  price: Sequelize.FLOAT,
-  category: Sequelize.STRING,
-  image: Sequelize.STRING,
-});
+Cart.hasMany(CartItem);
+CartItem.belongsTo(Cart);
 
-module.exports = {
-  db: sequelize,
-  Item,
-};
+Item.hasMany(CartItem);
+CartItem.belongsTo(Item);
+
+module.exports = { db, Item, User, Cart, CartItem };
