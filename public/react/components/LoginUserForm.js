@@ -38,10 +38,10 @@ const LoginUserForm = ({ open, setOpen }) => {
         setOpen(false);
       } else {
         console.log({ response });
-        setError("submission", "Error Creating User");
+        setError("root.submission", "Error Creating User");
       }
     } catch (error) {
-      setError("submission", error.message);
+      setError("root.submission", error.message);
       console.error(error);
     }
   };

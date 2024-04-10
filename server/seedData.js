@@ -179,4 +179,24 @@ module.exports = {
       image: "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
     },
   ],
+
+  users: [
+    {
+      name: "Taylor",
+      email: '1234@gmail.com',
+      password: '12345678A@'
+    },
+
+    {
+      name: "Cedrick",
+      email: '12345@gmail.com',
+      password: '12345678B@'
+    },
+
+    {
+      name: "Taj",
+      email: '123456@gmail.com',
+      password: '12345678C@'
+    },
+  ],
 };
