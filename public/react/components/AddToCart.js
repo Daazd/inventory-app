@@ -5,6 +5,7 @@ import MinusIcon from "@mui/icons-material/Remove";
 import PlusIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AppContext } from "../contexts/AppContext";
+import { on } from "events";
 
 export const AddToCart = ({ item }) => {
   const { cartMethods, cart, user } = useContext(AppContext);
@@ -18,13 +19,6 @@ export const AddToCart = ({ item }) => {
 
   const quantity =
     cart.find((cartItem) => cartItem.id === item.id)?.quantity || 0;
-
-import { on } from "events";
-
-
-export const AddToCart = ({ item, cart, cartCount, onAdd, onRemove, onUpdate }) => {
-  const [quantity, setQuantity] = useState(cartCount);
-  const [cartId, setCartId] = useState(null);
 
   const handleAdd = async (cartId) => {
     const response = await fetch(`/cart/${cartId}/add`, {
