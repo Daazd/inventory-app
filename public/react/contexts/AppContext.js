@@ -6,8 +6,6 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
 
-  console.log({ cart });
-
   const getCart = async () => {
     // find cart by user id
     // if it doesnt exist, create one
@@ -19,11 +17,13 @@ export const AppProvider = ({ children }) => {
 
   const addItemToCart = async ({ item }) => {
     // TODO
+    // if user is not logged in, show login modal
     setCart([...cart, { ...item, quantity: 1 }]);
   };
 
   const removeItemFromCart = async ({ item, cart }) => {
     // TODO
+    setCart(cart.filter((cartItem) => cartItem.id !== item.id));
   };
 
   const emptyCart = async ({ cart }) => {
@@ -31,15 +31,27 @@ export const AppProvider = ({ children }) => {
     setCart([]);
   };
 
-  const incrementItem = async ({ id }) => {
+  const incrementItem = async ({ item, cart }) => {
     // TODO
-    // const item = cart.find((cartItem) => cartItem.id === id);
     // item.quantity += 1;
     // setCart([...cart]);
-    setCart((prev) => {
-      const newCart = [...prev];
-      const item = newCart.find((cartItem) => cartItem.id === id);
-      item.quantity += 1;
+    setCart(() => {
+      const newCart = [...cart];
+      const cartItem = newCart.find((cartItem) => cartItem.id === item.id);
+      console.log({ cartItem, newCart });
+      cartItem.quantity += 1;
+      return newCart;
+    });
+  };
+
+  const decrementItem = async ({ item, cart }) => {
+    // TODO
+    // item.quantity -= 1;
+    // setCart([...cart]);
+    setCart(() => {
+      const newCart = [...cart];
+      const cartItem = newCart.find((cartItem) => cartItem.id === item.id);
+      cartItem.quantity -= 1;
       return newCart;
     });
   };
@@ -49,6 +61,7 @@ export const AppProvider = ({ children }) => {
     removeItemFromCart,
     emptyCart,
     incrementItem,
+    decrementItem,
   };
 
   return (

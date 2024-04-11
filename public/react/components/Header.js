@@ -8,6 +8,9 @@ import { AppContext } from "../contexts/AppContext";
 
 export const Header = () => {
   const { user, setUser, cart } = useContext(AppContext);
+
+  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <Stack
       direction="row"
@@ -25,7 +28,7 @@ export const Header = () => {
       </Link>
       <Stack spacing={2} direction="row" alignItems="center">
         <Link to="cart">
-          <Badge badgeContent={cart.length} color="primary">
+          <Badge badgeContent={cartCount} color="primary">
             <ShoppingCartOutlinedIcon fontSize="large" />
           </Badge>
         </Link>

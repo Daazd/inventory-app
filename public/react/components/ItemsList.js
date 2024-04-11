@@ -9,7 +9,6 @@ export const ItemsList = ({ items }) => {
       {items.map((item, idx) => {
         const quantity =
           cart.find((cartItem) => cartItem.id === item.id)?.quantity || 0;
-        console.log(item.name, quantity);
         return <Item item={item} key={item.name} cartCount={quantity} />;
       })}
     </>

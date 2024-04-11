@@ -1,5 +1,6 @@
 import React, { useContext, useState, useContext } from "react";
-import { Box, Typography, Stack, Link, Button } from "@mui/material";
+import { Box, Typography, Stack, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 
 const CartPage = () => {
@@ -10,13 +11,7 @@ const CartPage = () => {
   }, 0);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <Stack direction="column" alignItems="center">
       <Typography variant="h4" component="div">
         Your Cart
       </Typography>
@@ -63,7 +58,12 @@ const CartPage = () => {
         </Stack>
       )}
       {cart.length > 0 && (
-        <Stack direction="row" justifyContent="space-between" padding="1rem">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
           <Typography variant="h5" component="div">
             Total: ${cartTotal.toFixed(2)}
           </Typography>
@@ -72,7 +72,7 @@ const CartPage = () => {
           </Button>
         </Stack>
       )}
-    </Box>
+    </Stack>
   );
 };
 

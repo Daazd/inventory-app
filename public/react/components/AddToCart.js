@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AppContext } from "../contexts/AppContext";
 
 export const AddToCart = ({ item }) => {
-  const { cartMethods, cart } = useContext(AppContext);
+  const { cartMethods, cart, user } = useContext(AppContext);
   const {
     addItemToCart,
     removeItemFromCart,
@@ -14,20 +14,29 @@ export const AddToCart = ({ item }) => {
     incrementItem,
     decrementItem,
   } = cartMethods;
+
   const quantity =
     cart.find((cartItem) => cartItem.id === item.id)?.quantity || 0;
 
   return (
     <>
       {quantity === 0 ? (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => addItemToCart({ item })}
-          sx={{ width: "150px" }}
-        >
-          Add to Cart
-        </Button>
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => addItemToCart({ item })}
+            sx={{ width: "150px" }}
+            disabled={!user}
+          >
+            Add to Cart
+          </Button>
+          {!user && (
+            <Typography variant="body2" color="error">
+              Please log in to add items to your cart.
+            </Typography>
+          )}
+        </>
       ) : (
         <Grid container alignItems="center" spacing={0.5}>
           <Grid item>

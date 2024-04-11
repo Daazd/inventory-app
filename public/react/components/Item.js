@@ -16,7 +16,7 @@ const Item = ({ item }) => {
   return (
     <Card raised>
       <CardContent>
-        <Stack direction="row" sx={{ maxWidth: "600px", maxHeight: "300px" }}>
+        <Stack direction="row" sx={{ maxWidth: "600px" }}>
           <CardMedia sx={{ margin: "0 20px" }}>
             <Link to={`${item.id}`}>
               <img

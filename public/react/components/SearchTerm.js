@@ -28,6 +28,7 @@ export const SearchTerm = ({ items, updateItems }) => {
       placeholder="Search..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
+      sx={{ width: "300px" }}
       InputProps={{
         endAdornment: (
           <IconButton>
