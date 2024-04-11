@@ -23,14 +23,12 @@ const InventoryPage = () => {
   }, []);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Stack>
       <SearchTerm items={items} updateItems={setFilteredItems} />
       <Stack spacing={4}>
-        <Grid container spacing={4}>
-          <ItemsList items={filteredItems} />
-        </Grid>
+        <ItemsList items={filteredItems} />
       </Stack>
-    </Box>
+    </Stack>
   );
 };
 
