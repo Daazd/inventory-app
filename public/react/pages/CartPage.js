@@ -4,7 +4,7 @@ import { Box, Typography, Stack, Link, Button } from "@mui/material";
 
 const CartPage = () => {
   //   const { cart, emptyCart } = useContext(CartContext);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useContext(CartContext);
   const emptyCart = () => {
     setCart([]);
   };
