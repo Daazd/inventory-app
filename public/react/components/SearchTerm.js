@@ -13,7 +13,7 @@ export const SearchTerm = ({ items, updateItems }) => {
     const filteredItems = items.filter(
       (item) => {
         const nameAndDesc = item.name + " " + item.description;
-        return nameAndDesc.toLowerCase().includes(" " + lowercase);
+        return nameAndDesc.toLowerCase().includes(" " + lowercase) || nameAndDesc.toLowerCase().startsWith(lowercase);
       }
       // (!selectedCategory || item.category === selectedCategory) &&
       // item.price >= priceRange[0] &&
