@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from "react";
+import apiURL from "../api";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Button,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-const UpdatedItemForm = ({ item, onUpdate }) => {
+const UpdatedItemForm = ({ item, onUpdate,open, setOpen, updateItem }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(item);
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   useEffect(() => {
     setFormData(item);
   }, [item]);
@@ -14,58 +30,87 @@ const UpdatedItemForm = ({ item, onUpdate }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onUpdate(formData);
+  const onSubmit = async () => {
+   try {
+    const response = await fetch(`${apiURL}/items/${item.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (response.ok) {
+      onUpdate(await response.json());
+      setOpen(false);
+      navigate(`/items`);
+    } else {
+      alert("Error updating item");
+    }
+   }
+   catch (error) {
+    console.error(error);
+   }
   };
 
   return (
-    <main>
-      <h2>{formData.name}</h2>
-      {formData.image && <p>Image: {formData.image}</p>}
-      {formData.price && <p>Price: {formData.price}</p>}
-      {formData.description && <p>Description: {formData.description}</p>}
-      {formData.category && <p>Category: {formData.category}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <label>Description:</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <label>Price:</label>
-        <input
-          type="text"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-        />
-        <label>Category:</label>
-        <input
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-        />
-        <label>Image URL:</label>
-        <input
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-        />
-        <button type="submit">Update Item</button>
-      </form>
-    </main>
-  );
+    <Dialog open={open} onClose={() => setOpen(false)}>
+      <DialogTitle>Update Item</DialogTitle>
+      <DialogContent>
+        <form>
+          <TextField
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Price"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            />
+            <TextField
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            />
+            <TextField
+            label="Image"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            />
+            </form>
+
+            <Button
+            type="submit"
+            variant="contained"
+            onClick={handleSubmit(onSubmit)}
+            >
+            Update
+            </Button>
+            </DialogContent>
+            </Dialog>
+           
+  )
 };
 
 export { UpdatedItemForm };
+

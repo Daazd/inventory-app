@@ -184,19 +184,30 @@ module.exports = {
     {
       name: "Taylor",
       email: "1234@gmail.com",
-      password: "12345678A@"
+      password: "12345678A@",
+      isAdmin: true
     },
 
     {
       name: "Cedrick",
       email: '12345@gmail.com',
-      password: '12345678B@'
+      password: '12345678B@',
+      isAdmin: true
+
     },
 
     {
       name: "Taj",
       email: '123456@gmail.com',
-      password: '12345678C@'
+      password: '12345678C@',
+      isAdmin: true
+    },
+
+    {
+      name: "Reggie",
+      email: '1234567@gmail.com',
+      password: '12345678D@',
+      isAdmin: false
     },
   ],
 };
