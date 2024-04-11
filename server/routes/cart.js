@@ -2,52 +2,50 @@ const express = require("express");
 const router = express.Router();
 const { Cart } = require("../models/Cart");
 const { CartItem } = require("../models/CartItem");
+const { Item } = require("../models/Item");
 
 router.get("/cart/:userId", async (req, res) => {
-    const cart = await Cart.findOne({
-        where: {
-        userId: req.params.userId,
-        },
-        include: CartItem,
-    });
+    const user = await User.findByPk(req.params.userId);
+    const cart = await user.findOrCreateCart();
     res.json(cart);
 });
 
-router.post("/cart/:userId/add", async (req, res) => {
-    const { productId, quantity } = req.body;
-    const cart = await Cart.findOne({
-        where: {
-        userId: req.params.userId,
-        },
+router.post("/cart/:cartId/add", async (req, res) => {
+    const { itemId, quantity } = req.body;
+    const cart = await Cart.findByPk(req.params.cartId, {
+        include: CartItem,
     });
-    const newItem = await CartItem.create({
-        productId,
-        quantity,
+    const item = await Item.findByPk(itemId);
+    if (!item) {
+        return res.status(404).send("Product not found");
+    }
+    const newItem =await CartItem.create({
+        quantity: quantity,
     });
-    res.json(newItem);
+    await newItem.setItem(item);
+    await newItem.setCart(cart);
+    res.json(cart);
+    // TODO test that item isnt already in the cart
 });
 
-router.delete("/cart/:userId/remove/:itemId", async (req, res) => {
+router.delete("/cart/:cartId/remove/:itemId", async (req, res) => {
     await CartItem.destroy({
         where: {
         id: req.params.itemId,
         },
     });
-    res.json({ message: "Item removed" });
+    const cart = await Cart.findByPk(req.params.cartId, {
+        include: CartItem,
+    });
+    res.json(cart);
 });
 
-router.delete("/cart/:userId/empty", async (req, res) => {
-    const cart = await Cart.findOne({
-        where: {
-        userId: req.params.userId,
-        },
-    });
-    await CartItem.destroy({
-        where: {
-        cartId: cart.id,
-        },
-    });
-    res.json({ message: "Cart emptied" });
+router.delete("/cart/:cartId/empty", async (req, res) => {
+    const cart = await Cart.findByPk(
+         req.params.cartId
+    );
+    cart.removeCartItems();
+    res.json(cart);
 });
 
 module.exports = router;

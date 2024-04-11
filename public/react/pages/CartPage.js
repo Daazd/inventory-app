@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 
 const CartPage = () => {
+
   const { cart, cartMethods } = useContext(AppContext);
   const { emptyCart } = cartMethods;
+
+
   const cartTotal = cart.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);

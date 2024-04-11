@@ -7,6 +7,9 @@ const { db } = require("../db");
 Cart.hasMany(CartItem);
 CartItem.belongsTo(Cart);
 
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
 Item.hasMany(CartItem);
 CartItem.belongsTo(Item);
 

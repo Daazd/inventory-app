@@ -75,6 +75,7 @@ describe("PUT /items/:id", () => {
   it("should update an item", async () => {
     Item.update.mockResolvedValueOnce({ id: 1, ...newItem });
     const response = await request(app).put("/api/items/1").send(newItem);
+    //console.log(response.body)
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ id: 1, ...newItem });
   });
