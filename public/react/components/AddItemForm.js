@@ -9,8 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 
 const AddItemForm = ({ open, setOpen }) => {
+  const navigate = useNavigate();
+  
+
   const {
     register,
     handleSubmit,
@@ -27,7 +32,10 @@ const AddItemForm = ({ open, setOpen }) => {
         body: JSON.stringify(data),
       });
       if (response.ok) {
+        const newItem = await response.json();
         alert("Item added");
+        navigate(`/items/${newItem.id}`);
+        setOpen(false);
       } else {
         alert("Error adding item");
       }

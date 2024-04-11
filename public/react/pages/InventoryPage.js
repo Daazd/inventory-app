@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Grid, Typography, Stack } from "@mui/material";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -6,8 +6,10 @@ import { ItemsList } from "../components/ItemsList";
 import { SearchTerm } from "../components/SearchTerm";
 import { AddItemForm } from "../components/AddItemForm";
 import apiURL from "../api";
+import { AppContext } from "../contexts/AppContext";
 
-const InventoryPage = ({user}) => {
+const InventoryPage = () => {
+  const { user, setUser} = useContext(AppContext);
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -28,10 +30,10 @@ const InventoryPage = ({user}) => {
 
   const showFab = user && user.isAdmin;
   return (
-    <Stack>
+    <Box sx={{ p: 2 }}>
       <SearchTerm items={items} updateItems={setFilteredItems} />
       <Stack spacing={4}>
-        <Grid container spacing={4}>
+        <Grid container spacing={4}>    
           <ItemsList items={filteredItems} />
         </Grid>   
         {showFab && 
@@ -46,11 +48,8 @@ const InventoryPage = ({user}) => {
         <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       </Stack>
     </Box>
-        <ItemsList items={filteredItems} />
-      </Stack>
-    </Stack>
   );
-};
+}; 
 
 export { InventoryPage };
 

@@ -11,8 +11,10 @@ import { useParams } from "react-router-dom";
 import { UpdatedItemForm } from "../components/UpdateItemForm";
 import { DeleteItemForm } from "../components/DeleteItemForm";
 import apiURL from "../api";
+import { AppContext } from "../contexts/AppContext";
 
-const SingleItemPage = ({user}) => {
+const SingleItemPage = () => {
+  const { user, setUser } = useContext(AppContext);
   console.log({ user });
   const { id } = useParams();
   const [item, setItem] = useState({});
