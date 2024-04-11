@@ -7,7 +7,7 @@ import { SearchTerm } from "../components/SearchTerm";
 import { AddItemForm } from "../components/AddItemForm";
 import apiURL from "../api";
 
-const InventoryPage = () => {
+const InventoryPage = ({user}) => {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -26,6 +26,7 @@ const InventoryPage = () => {
     fetchItems();
   }, []);
 
+  const showFab = user && user.isAdmin;
   return (
     <Box sx={{ p: 2 }}>
       <SearchTerm items={items} updateItems={setFilteredItems} />
@@ -33,6 +34,7 @@ const InventoryPage = () => {
         <Grid container spacing={4}>
           <ItemsList items={filteredItems} />
         </Grid>   
+        {showFab && 
         <Fab sx={{
       position: "fixed",
       bottom: (theme) => theme.spacing(2),
@@ -40,6 +42,7 @@ const InventoryPage = () => {
     }} color="primary" aria-label="add" onClick={() => setOpenAddItem(!openAddItem)}>
           <AddIcon />
           </Fab>   
+        }
         <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       </Stack>
     </Box>
@@ -48,3 +51,5 @@ const InventoryPage = () => {
 };
 
 export { InventoryPage };
+
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Typography, Stack, Fab } from "@mui/material";
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -12,8 +12,8 @@ import { UpdatedItemForm } from "../components/UpdateItemForm";
 import { DeleteItemForm } from "../components/DeleteItemForm";
 import apiURL from "../api";
 
-
-const SingleItemPage = ({}) => {
+const SingleItemPage = ({user}) => {
+  console.log({ user });
   const { id } = useParams();
   const [item, setItem] = useState({});
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -94,6 +94,7 @@ const SingleItemPage = ({}) => {
             item={item}
           />
         )}
+        {user && user.isAdmin && (
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
           icon={<SpeedDialIcon />}
@@ -113,7 +114,7 @@ const SingleItemPage = ({}) => {
             onClick={handleOpenDelete}
           />
         </StyledSpeedDial>
-        
+        )}
       </Stack>
     </Stack>
     </>
@@ -121,3 +122,4 @@ const SingleItemPage = ({}) => {
 };
 
 export { SingleItemPage };
+
