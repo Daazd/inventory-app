@@ -1,25 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card, IconButton, Typography, Button, Grid } from "@mui/material";
 import MinusIcon from "@mui/icons-material/Remove";
 import PlusIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { AppContext } from "../contexts/AppContext";
 
-export const AddToCart = ({ item, cartCount }) => {
-  const [quantity, setQuantity] = useState(cartCount);
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleRemove = () => {
-    setQuantity(0);
-  };
+export const AddToCart = ({ item }) => {
+  const { cartMethods, cart } = useContext(AppContext);
+  const {
+    addItemToCart,
+    removeItemFromCart,
+    emptyCart,
+    incrementItem,
+    decrementItem,
+  } = cartMethods;
+  const quantity =
+    cart.find((cartItem) => cartItem.id === item.id)?.quantity || 0;
 
   return (
     <>
@@ -27,7 +23,7 @@ export const AddToCart = ({ item, cartCount }) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleIncrement()}
+          onClick={() => addItemToCart({ item })}
           sx={{ width: "150px" }}
         >
           Add to Cart
@@ -36,11 +32,11 @@ export const AddToCart = ({ item, cartCount }) => {
         <Grid container alignItems="center" spacing={0.5}>
           <Grid item>
             {quantity === 1 ? (
-              <IconButton onClick={handleRemove}>
+              <IconButton onClick={() => removeItemFromCart({ item, cart })}>
                 <DeleteIcon />
               </IconButton>
             ) : (
-              <IconButton onClick={handleDecrement}>
+              <IconButton onClick={() => decrementItem({ item, cart })}>
                 <MinusIcon />
               </IconButton>
             )}
@@ -49,7 +45,7 @@ export const AddToCart = ({ item, cartCount }) => {
             <Typography variant="body2">{quantity}</Typography>
           </Grid>
           <Grid item>
-            <IconButton onClick={handleIncrement}>
+            <IconButton onClick={() => incrementItem({ item, cart })}>
               <PlusIcon />
             </IconButton>
           </Grid>

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Typography, Stack, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ActiveUserArea } from "./ActiveUserArea";
 import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { AppContext } from "../contexts/AppContext";
 
-export const Header = ({ user, setUser }) => {
+export const Header = () => {
+  const { user, setUser, cart } = useContext(AppContext);
   return (
     <Stack
       direction="row"
@@ -23,11 +25,11 @@ export const Header = ({ user, setUser }) => {
       </Link>
       <Stack spacing={2} direction="row" alignItems="center">
         <Link to="cart">
-          <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={cart.length} color="primary">
             <ShoppingCartOutlinedIcon fontSize="large" />
           </Badge>
         </Link>
-        <ActiveUserArea user={user} setUser={setUser} />
+        <ActiveUserArea user={user} setUser={setUser} cart={cart} />
       </Stack>
     </Stack>
   );

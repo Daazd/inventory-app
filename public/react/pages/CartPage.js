@@ -1,14 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useContext } from "react";
 import { Box, Typography, Stack, Link, Button } from "@mui/material";
-// import { CartContext } from "../contexts/CartContext";
+import { AppContext } from "../contexts/AppContext";
 
 const CartPage = () => {
-  //   const { cart, emptyCart } = useContext(CartContext);
-  const [cart, setCart] = useState([]);
-  const emptyCart = () => {
-    setCart([]);
-  };
-
+  const { cart, cartMethods } = useContext(AppContext);
+  const { emptyCart } = cartMethods;
   const cartTotal = cart.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
@@ -71,11 +67,7 @@ const CartPage = () => {
           <Typography variant="h5" component="div">
             Total: ${cartTotal.toFixed(2)}
           </Typography>
-          <Button
-            onClick={() => emptyCart()}
-            variant="contained"
-            color="secondary"
-          >
+          <Button onClick={emptyCart} variant="contained" color="secondary">
             Empty Cart
           </Button>
         </Stack>

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 import { AddToCart } from "./AddToCart";
 
-const Item = ({ item, cartCount }) => {
+const Item = ({ item }) => {
   return (
     <Card raised>
       <CardContent>
@@ -36,7 +36,7 @@ const Item = ({ item, cartCount }) => {
             <Typography variant="body2" color="text.secondary">
               {item.description}
             </Typography>
-            <AddToCart item={item} cartCount={cartCount} />
+            <AddToCart item={item} />
           </Stack>
         </Stack>
       </CardContent>
