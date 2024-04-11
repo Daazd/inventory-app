@@ -26,9 +26,6 @@ const HomePage = () => {
           <Link to="items">
             <Typography variant="h6">Browse Items</Typography>
           </Link>
-          <Link to="cart">
-            <Typography variant="h6">View Cart</Typography>
-          </Link>
         </Stack>
       </Stack>
     </Box>

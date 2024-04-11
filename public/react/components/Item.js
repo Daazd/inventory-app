@@ -12,11 +12,11 @@ import { Link } from "react-router-dom";
 
 import { AddToCart } from "./AddToCart";
 
-const Item = ({ item, cartCount }) => {
+const Item = ({ item }) => {
   return (
     <Card raised>
       <CardContent>
-        <Stack direction="row" sx={{ maxWidth: "600px", maxHeight: "300px" }}>
+        <Stack direction="row" sx={{ maxWidth: "600px" }}>
           <CardMedia sx={{ margin: "0 20px" }}>
             <Link to={`${item.id}`}>
               <img
@@ -36,7 +36,7 @@ const Item = ({ item, cartCount }) => {
             <Typography variant="body2" color="text.secondary">
               {item.description}
             </Typography>
-            <AddToCart item={item} cartCount={cartCount} />
+            <AddToCart item={item} />
           </Stack>
         </Stack>
       </CardContent>

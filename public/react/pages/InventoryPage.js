@@ -28,7 +28,7 @@ const InventoryPage = ({user}) => {
 
   const showFab = user && user.isAdmin;
   return (
-    <Box sx={{ p: 2 }}>
+    <Stack>
       <SearchTerm items={items} updateItems={setFilteredItems} />
       <Stack spacing={4}>
         <Grid container spacing={4}>
@@ -46,7 +46,9 @@ const InventoryPage = ({user}) => {
         <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       </Stack>
     </Box>
-    
+        <ItemsList items={filteredItems} />
+      </Stack>
+    </Stack>
   );
 };
 

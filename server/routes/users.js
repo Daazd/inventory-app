@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
-const { User } = require("../models/Users");
+const { User } = require("../models/User");
+const { Cart } = require("../models/Cart");
+
 
 router.use(bodyParser.json());
 
@@ -51,6 +53,15 @@ router.put("/:id", async (req, res) => {
     },
   });
   res.json(updatedUser);
+});
+
+router.get("/:id/cart", async (req, res) => {
+  const user = await User.findByPk(req.params.id);
+  let cart = await user.getCart();
+  if (!cart) {
+    cart = await user.createCart();
+  }
+  res.json(cart);
 });
 
 module.exports = router;

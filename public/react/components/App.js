@@ -1,136 +1,87 @@
 import React, { useState, useEffect, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Outlet,
-  Navigate,
-} from "react-router-dom";
-import { useTheme } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { SingleItemPage, HomePage, InventoryPage, CartPage } from "../pages";
+  SingleItemPage,
+  HomePage,
+  InventoryPage,
+  CartPage,
+  MissingPage,
+} from "../pages";
 import { Button, Stack } from "@mui/material";
 import { Header } from "./Header";
-import { Item } from "./Item";
-import { Admin } from "./Admin";
-import { PrivateRouteWrapper } from "./PrivateRoute";
-import AdminPanelForm from "./AdminPanelForm";
+import { AppProvider } from "../contexts/AppContext";
 
 // import and prepend the api url to any fetch calls
 import apiURL from "../api";
-import CreateUser from "./LoginUserForm";
 
 export const App = () => {
-  const [user, setUser] = useState(null);
-  const [openAddItem, setOpenAddItem] = useState(false);
-  const [currentItem, setCurrentItem] = useState({});
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000]);
   const [items, setItems] = useState([]);
-  //const history = useHistory();
-  const [item, setItem] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    image: "",
-  });
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  // const [user, setUser] = useState(null);
+  // const [cart, setCart] = useState([]);
 
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`${apiURL}/items/${item.id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        alert("Item deleted");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getCart = async () => {
+  //   // find cart by user id
+  //   // if it doesnt exist, create one
+  //   // const response = await fetch()...
+  //   // const data = response.json();
+  //   // setCart(data)
+  //   setCart([]);
+  // };
 
-  const handleUpdate = async (item) => {
-    try {
-      const response = await fetch(`${apiURL}/items/${item.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(item),
-      });
-      if (response.ok) {
-        alert("Item updated");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const addItemToCart = async ({ item }) => {
+  //   // TODO
+  //   setCart([...cart, item]);
+  // };
 
-  async function handleItemClick(id) {
-    //make it work
-    try {
-      const response = await fetch(`${apiURL}/items/${id}`);
-      const data = await response.json();
-      setCurrentItem(data);
-      setItems([]);
-    } catch (err) {
-      console.log("Error getting the item", err);
-    }
-  }
+  // const removeItemFromCart = async ({ item, cart }) => {
+  //   // TODO
+  // };
 
-  async function handleAddItemClick() {
-    setItems([]);
-    setCurrentItem({});
-    //create form to add Item.
-  }
+  // const emptyCart = async ({ cart }) => {
+  //   // TODO
+  //   setCart([]);
+  // };
+
+  // const incrementItem = async ({ id }) => {
+  //   // TODO
+  //   // const item = cart.find((cartItem) => cartItem.id === id);
+  //   // item.quantity += 1;
+  //   // setCart([...cart]);
+  //   setCart((prev) => {
+  //     const newCart = [...prev];
+  //     const item = newCart.find((cartItem) => cartItem.id === id);
+  //     item.quantity += 1;
+  //     return newCart;
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     getCart();
+  //   }
+  // }, [user]);
+
+  // const cartMethods = { addItemToCart, removeItemFromCart, emptyCart };
 
   // create router and routes: /, /items, /items/:id, /cart
   const routes = (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/items" element={<InventoryPage user={user} />} />
-      <Route path="/items/:id" element={<SingleItemPage user={user} />} />
+      <Route path="/items" element={<InventoryPage />} />
+      <Route path="/items/:id" element={<SingleItemPage />} />
       <Route path="/cart" element={<CartPage />} />
-      <Route
-        path="/admin"
-        element={
-          <PrivateRouteWrapper roles={["admin"]}>
-            <AdminPanelForm />
-          </PrivateRouteWrapper>
-        }
-      />
-      <Route
-        path="/admin/*"
-        element={
-          <PrivateRouteWrapper roles={["admin"]}>
-            <Admin />
-          </PrivateRouteWrapper>
-        }
-      />
+      <Route path="*" element={<MissingPage />} />
     </Routes>
   );
 
   return (
-    <Router>
-      <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
-        <Header user={user} setUser={setUser} />
-        {routes}
-        <Stack direction="row" justifyContent="flex-end">
-          <Link to="/">
-            <Button variant="contained">Home</Button>
-          </Link>
-          <Link to="/items">
-            <Button variant="contained">Back to Shopping</Button>
-          </Link>
-          <Link to="/cart">
-            <Button variant="contained">Your Cart</Button>
-          </Link>
+    <AppProvider>
+      <Router>
+        <Stack direction="column" style={{ width: "80%", margin: "0 auto" }}>
+          <Header />
+          {routes}
         </Stack>
-      </Stack>
-    </Router>
+      </Router>
+    </AppProvider>
   );
 };

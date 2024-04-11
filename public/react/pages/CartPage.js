@@ -1,26 +1,20 @@
-import React, { useContext, useState } from "react";
-import { Box, Typography, Stack, Link, Button } from "@mui/material";
-// import { CartContext } from "../contexts/CartContext";
+import React, { useContext, useState, useContext } from "react";
+import { Box, Typography, Stack, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
 
 const CartPage = () => {
-  //   const { cart, emptyCart } = useContext(CartContext);
-  const [cart, setCart] = useState([]);
-  const emptyCart = () => {
-    setCart([]);
-  };
+
+  const { cart, cartMethods } = useContext(AppContext);
+  const { emptyCart } = cartMethods;
+
 
   const cartTotal = cart.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <Stack direction="column" alignItems="center">
       <Typography variant="h4" component="div">
         Your Cart
       </Typography>
@@ -67,20 +61,21 @@ const CartPage = () => {
         </Stack>
       )}
       {cart.length > 0 && (
-        <Stack direction="row" justifyContent="space-between" padding="1rem">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
           <Typography variant="h5" component="div">
             Total: ${cartTotal.toFixed(2)}
           </Typography>
-          <Button
-            onClick={() => emptyCart()}
-            variant="contained"
-            color="secondary"
-          >
+          <Button onClick={emptyCart} variant="contained" color="secondary">
             Empty Cart
           </Button>
         </Stack>
       )}
-    </Box>
+    </Stack>
   );
 };
 
