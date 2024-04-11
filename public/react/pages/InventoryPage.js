@@ -36,18 +36,21 @@ const InventoryPage = () => {
         <Grid container spacing={4}>    
           <ItemsList items={filteredItems} />
         </Grid>   
-        {showFab && 
-        <Fab sx={{
-      position: "fixed",
-      bottom: (theme) => theme.spacing(2),
-      right: (theme) => theme.spacing(2)
-    }} color="primary" aria-label="add" onClick={() => setOpenAddItem(!openAddItem)}>
-          <AddIcon />
-          </Fab>   
-        }
+        {showFab && (
+          <Fab 
+            sx={{
+              position: "fixed",
+              bottom: (theme) => theme.spacing(2),
+              right: (theme) => theme.spacing(2)
+            }} 
+            color="primary" aria-label="add" onClick={() => setOpenAddItem(!openAddItem)}>
+            <AddIcon />
+            </Fab>   
+          )}
         <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       </Stack>
-    </Box>
+    </Stack>
+    </Box
   );
 }; 
 

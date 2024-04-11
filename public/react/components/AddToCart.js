@@ -5,6 +5,7 @@ import MinusIcon from "@mui/icons-material/Remove";
 import PlusIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AppContext } from "../contexts/AppContext";
+import { on } from "events";
 
 export const AddToCart = ({ item }) => {
   const { cartMethods, cart, user } = useContext(AppContext);
