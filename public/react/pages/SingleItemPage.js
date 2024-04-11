@@ -12,6 +12,7 @@ import { UpdatedItemForm } from "../components/UpdateItemForm";
 import { DeleteItemForm } from "../components/DeleteItemForm";
 import apiURL from "../api";
 
+
 const SingleItemPage = ({}) => {
   const { id } = useParams();
   const [item, setItem] = useState({});
@@ -45,10 +46,12 @@ const SingleItemPage = ({}) => {
     },
   }));
 
-  const actions = [
-    { icon: <EditIcon />, name: 'Copy' },
-    { icon: <EditIcon />, name: 'Save' }
-  ]
+  function handleOpenSpeedDial() {
+    setSpeedDialOpen(true);
+  }
+  function handleCloseSpeedDial() {
+    setSpeedDialOpen(false);
+  }
   function handleOpenUpdate() {
     setOpenUpdate(!openUpdate);
   }
@@ -57,6 +60,7 @@ const SingleItemPage = ({}) => {
   }
 
   return (
+    <>
     <Stack direction="row" justifyContent="space-between" width="1000px">
       <img width="400px" height="400px" src={item.image} alt={item.name} />
       <Stack direction="column" justifyContent="space-between" width="400px">
@@ -68,18 +72,34 @@ const SingleItemPage = ({}) => {
         </Typography>
         <Typography variant="h6">Price: ${item.price}</Typography>
         <AddToCart item={item} cartCount={0} />
-        <UpdatedItemForm
-          open={openUpdate}
-          onUpdate={() => console.log("Update Item")}
-          setOpen={setOpenUpdate}
-          item={item}
-        />
+        {openUpdate && (
+          <UpdatedItemForm
+            open={openUpdate}
+            onUpdate={(updatedItem) => {
+              setItem(updatedItem);
+              setOpenUpdate(false);
+            }}
+            setOpen={setOpenUpdate}
+            item={item}
+          />
+        )}
+        {openDelete && (
+          <DeleteItemForm
+            open={openDelete}
+            onDelete={(deletedItem) => {
+              setItem({});
+              setOpenDelete(false);
+            }}
+            setOpen={setOpenDelete}
+            item={item}
+          />
+        )}
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
           icon={<SpeedDialIcon />}
           direction={"up"}
-          onClose={() => setSpeedDialOpen(false)}
-          onOpen={() => setSpeedDialOpen(true)}
+          onClose={handleCloseSpeedDial}
+          onOpen={handleOpenSpeedDial}
           open={speedDialOpen}
         >
           <SpeedDialAction
@@ -95,9 +115,8 @@ const SingleItemPage = ({}) => {
         </StyledSpeedDial>
         
       </Stack>
-     
     </Stack>
-    
+    </>
   );
 };
 

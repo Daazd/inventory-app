@@ -9,10 +9,16 @@ import {
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-const UpdatedItemForm = ({ item, onUpdate,open, setOpen }) => {
+const UpdatedItemForm = ({ item, onUpdate,open, setOpen, updateItem }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(item);
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   useEffect(() => {
     setFormData(item);
   }, [item]);
@@ -24,9 +30,26 @@ const UpdatedItemForm = ({ item, onUpdate,open, setOpen }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onUpdate(formData);
+  const onSubmit = async (data) => {
+   try {
+    const response = await fetch(`${apiURL}/items/${item._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      onUpdate(await response.json());
+      setOpen(false);
+      navigate(`/items/${item._id}`);
+    } else {
+      alert("Error updating item");
+    }
+   }
+   catch (error) {
+    console.error(error);
+   }
   };
 
   return (
@@ -39,35 +62,45 @@ const UpdatedItemForm = ({ item, onUpdate,open, setOpen }) => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            fullWidth
+            margin="normal"
           />
           <TextField
             label="Description"
             name="description"
             value={formData.description}
             onChange={handleChange}
+            fullWidth
+            margin="normal"
           />
           <TextField
             label="Price"
             name="price"
             value={formData.price}
+            fullWidth
+            margin="normal"
             />
             <TextField
             label="Category"
             name="category"
             value={formData.category}
+            fullWidth
+            margin="normal"
             />
             <TextField
             label="Image"
             name="image"
             value={formData.image}
             onChange={handleChange}
+            fullWidth
+            margin="normal"
             />
             </form>
 
             <Button
             type="submit"
             variant="contained"
-            onClick={handleSubmit}
+            onClick={handleSubmit(onSubmit)}
             >
             Update
             </Button>
@@ -78,3 +111,4 @@ const UpdatedItemForm = ({ item, onUpdate,open, setOpen }) => {
 };
 
 export { UpdatedItemForm };
+
