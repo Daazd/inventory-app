@@ -30,19 +30,19 @@ const UpdatedItemForm = ({ item, onUpdate,open, setOpen, updateItem }) => {
     });
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
    try {
-    const response = await fetch(`${apiURL}/items/${item._id}`, {
+    const response = await fetch(`${apiURL}/items/${item.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     });
     if (response.ok) {
       onUpdate(await response.json());
       setOpen(false);
-      navigate(`/items/${item._id}`);
+      navigate(`/items`);
     } else {
       alert("Error updating item");
     }
@@ -77,6 +77,7 @@ const UpdatedItemForm = ({ item, onUpdate,open, setOpen, updateItem }) => {
             label="Price"
             name="price"
             value={formData.price}
+            onChange={handleChange}
             fullWidth
             margin="normal"
             />
@@ -84,6 +85,7 @@ const UpdatedItemForm = ({ item, onUpdate,open, setOpen, updateItem }) => {
             label="Category"
             name="category"
             value={formData.category}
+            onChange={handleChange}
             fullWidth
             margin="normal"
             />

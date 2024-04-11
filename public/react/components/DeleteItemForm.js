@@ -15,7 +15,7 @@ const DeleteItemForm = ({ item, onDelete, open, setOpen }) => {
 
   const onSubmit = async () => {
     try {
-      const response = await fetch(`${apiURL}/items/${item._id}`, {
+      const response = await fetch(`${apiURL}/items/${item.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
