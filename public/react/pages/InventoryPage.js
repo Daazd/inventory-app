@@ -49,8 +49,7 @@ const InventoryPage = () => {
           )}
         <AddItemForm open={openAddItem} setOpen={setOpenAddItem} />
       </Stack>
-    </Stack>
-    </Box
+    </Box>
   );
 }; 
 
