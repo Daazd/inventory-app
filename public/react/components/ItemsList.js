@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Item } from "./Item";
 import { AppContext } from "../contexts/AppContext";
 
+
 export const ItemsList = ({ items }) => {
   const { cart } = useContext(AppContext);
   return (

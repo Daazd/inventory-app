@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Rating from "@mui/material/Rating";
 
 
 const AddItemForm = ({ open, setOpen }) => {
@@ -115,6 +116,7 @@ const AddItemForm = ({ open, setOpen }) => {
           >
             Add Item
           </Button>
+          <Rating name="initial-rating" defaultValue={2} precision={0.5} />
         </form>
       </DialogContent>
     </Dialog>
