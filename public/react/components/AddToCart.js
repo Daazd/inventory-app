@@ -19,13 +19,6 @@ export const AddToCart = ({ item }) => {
   const quantity =
     cart.find((cartItem) => cartItem.id === item.id)?.quantity || 0;
 
-import { on } from "events";
-
-
-export const AddToCart = ({ item, cart, cartCount, onAdd, onRemove, onUpdate }) => {
-  const [quantity, setQuantity] = useState(cartCount);
-  const [cartId, setCartId] = useState(null);
-
   const handleAdd = async (cartId) => {
     const response = await fetch(`/cart/${cartId}/add`, {
       method: "POST",
