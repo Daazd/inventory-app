@@ -2,12 +2,12 @@ import React, { useContext, useState, useContext } from "react";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
+import { LottiePlayer } from "../components/LottiePlayer";
+import animationData from "../../lottie-files/emptyCart.json";
 
 const CartPage = () => {
-
   const { cart, cartMethods } = useContext(AppContext);
   const { emptyCart } = cartMethods;
-
 
   const cartTotal = cart.reduce((total, item) => {
     return total + item.price * item.quantity;
@@ -15,11 +15,15 @@ const CartPage = () => {
 
   return (
     <Stack direction="column" alignItems="center">
-      <Typography variant="h4" component="div">
-        Your Cart
+      <Typography variant="h3" component="div">
+        Your Cart {cart.length ? "" : "Is Empty"}
       </Typography>
       {cart.length === 0 ? (
-        <Typography variant="body2">Your cart is empty</Typography>
+          <LottiePlayer
+            animationData={animationData}
+            width={500}
+            height={500}
+            />
       ) : (
         <Stack
           direction="row"
