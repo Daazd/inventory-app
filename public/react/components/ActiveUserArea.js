@@ -23,7 +23,7 @@ const ActiveUserArea = ({ user, setUser }) => {
   const handleOpenLoginForm = () => {
     setShowForm(true);
     handleClose();
-  };
+  }; 
 
   return (
     <>
