@@ -2,11 +2,15 @@
   "name": "inventoryapp",
   "version": "1.2.0",
   "scripts": {
-    "test": "jest --watchAll",
+    "test-jest": "jest --watchAll",
     "client-dev": "parcel public/index.html --open",
     "server-dev": "nodemon server.js",
     "seed": "node server/seed.js",
-    "start": "parcel build public/index.html && npm run seed && node server.js"
+    "start-server": "parcel build public/index.html && npm run seed && node server.js",
+    "start": "react-scripts start",
+    "build": "webpack --mode production",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@babel/preset-env": "^7.15.0",
@@ -17,6 +21,7 @@
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@mui/system": "^5.15.15",
+    "aws-sdk": "^2.1602.0",
     "cors": "^2.8.5",
     "dom": "^0.0.3",
     "dotenv": "16.0.0",
@@ -35,7 +40,8 @@
     "router": "^1.3.8",
     "sequelize": "^6.23.2",
     "sqlite3": "^5.1.1",
-    "supertest": "^6.3.4"
+    "supertest": "^6.3.4",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@testing-library/react": "^12.0.0",
